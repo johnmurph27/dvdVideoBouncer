@@ -1,59 +1,47 @@
-var canvas = document.querySelector('canvas');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
-//context
-var c = canvas.getContext('2d');
+var container = document.getElementById("container");
+var width = document.body.clientWidth;
+var height = document.body.clientHeight;
+container.setAttribute("style","width:"+width+"px; height:"+height+"px; border: 1px solid black");
 
-// Rectange
-// c.fillStyle = "blue";
-// c.fillRect(100, 100, 50, 50);
-// c.fillStyle = "green";
-// c.fillRect(200, 100, 50, 50);
-// c.fillStyle = "purple";
-// c.fillRect(100, 200, 50, 50);
+// Resize container on window resize
+var onresize = function() {
+   
+    var width = document.body.clientWidth;
+    var height = document.body.clientHeight;
+    container.setAttribute("style","width:"+width+"px; height:"+height+"px; border: 1px solid black");
 
-// Line
-// c.beginPath();
-// c.moveTo(50, 300);
-// c.lineTo(300, 100);
-// c.lineTo(400, 300);
-// c.strokeStyle = "red";
-// c.stroke();
-
-// Arch
-c.beginPath();
-c.arc(300, 300, 30, 0, Math.PI * 2, false);
-c.strokeStyle = "orange";
-c.stroke();
-
-var x = 200;
-var y = 200;
-var speed = 1;
-var dx = 2;
-var dy = 2;
-var xRadius = 0;
-var yRadius = 0;
-
-function animate() {
-    requestAnimationFrame(animate);
-    c.clearRect(0, 0, innerWidth, innerHeight);
-    // c.beginPath();
-    // c.arc(x, y, 30, 0, Math.PI * 2, false);
-    // c.strokeStyle = "orange";
-    // c.stroke();
-    c.fillStyle = "blue";
-    c.fillRect(x, y, 50, 50);
-    
-    if ( x + 50 > innerWidth || x - xRadius < 0){
-        dx = -dx;
-    }
-    if ( y + 50 > innerHeight || y - yRadius < 0){
-         dy = -dy;
-    }
-    x += dx;
-    y += dy;
 }
 
-animate();
+ window.addEventListener("resize", onresize);
+
+
+ var x = 20;
+ var y = 200;
+ var dx = 1;
+ var dy = 1;
+ 
+
+function move() {
+    var box = document.getElementById("box");
+    var id = setInterval(frame, 10);
+    function frame() {
+        if(x + 50 > width || x < 0){
+            dx = -dx;
+        } else {
+            
+            box.style.left = x + "px";
+        }
+        if ( y + 50 > height || y < 0){
+            dy = -dy;
+        }else {
+            box.style.top = y + "px";
+        }
+        x = x + dx;
+        y = y + dy;
+    }
+}
+move();
+
+
